@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<main class='hero'>
+	<div class='hero-body'>
+		<div class='container'>
+			<div class='columns'>
+				<div class='column is-three-fifths is-offset-one-fifth'>
+					<figure class='image center mb-2'>
+						<img class='is-rounded card' src='{{config.extra.author.avatar}}' style='max-width: 150px'>
+					</figure>
+					<div class='has-text-centered'>
+						<h1 class='title'>{{ section.title }}</h1>
+						<h2 class='subtitle'>{{ section.description }}</h2>
+						{{ macros:: social_links( social_config=config.extra.social) }}
+					</div>
+					<hr />
+					<div class='content has-text-justified px-5 mx-5'>
+						{{section.content | safe}}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class='container'>
+			<div class='has-text-centered mt-6 mb-5'>
+				<h1 class='title is-4'>Posts</h1>
+			</div>
+		</div>
+		<div class='container'>
+			<div class='columns'>
+				<div class='column is-three-fifths is-offset-one-fifth'>
+					{% set posts_section = get_section(path="posts/_index.md") %}
+					{% for page in posts_section.pages %}
+					<article>
+						<div class='columns is-mobile'>
+							<div class='column'>
+								<a class="link" href="{{ page.permalink }}">
+									<span class='title is-6'>{{ page.title }}</span>
+								</a>
+							</div>
+							<div class='column is-narrow'>
+								<time class='has-text-grey' datetime='{{page.date}}'>{{ page.date | date(format='%b %d, %Y') }}</time>
+							</div>
+						</div>
+					</article>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+{% endblock %}

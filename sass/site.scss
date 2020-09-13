@@ -1,0 +1,74 @@
+ @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&display=swap');
+
+$font-stack: "Fira Code", monospace;
+$font-text: "Montserrat", sans-serif;
+
+$link: hsl(0, 0%, 21%);
+$link-hover: hsl(204, 71%, 39%);
+
+$read-more: hsl(204, 71%, 39%);
+$read-more-hover: hsl(348, 100%, 61%);
+
+body {
+  font: 100% $font-stack;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  font: 100% $font-text;
+}
+.content h1,h2,h3,h4,h5 {
+  font-family: $font-stack;
+}
+.content pre,code {
+  font-family: $font-stack;
+  font-variant-ligatures: none;
+}
+
+main {
+  flex: 1;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.link {
+  color: $link;
+  &:hover {
+    color: $link-hover;
+  }
+}
+main {
+  flex: 1;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.link {
+  color: $link;
+  &:hover {
+    color: $link-hover;
+  }
+}
+.read-more {
+  color: $read-more;
+  &:hover {
+    color: $read-more-hover;
+  }
+}
+
+$breakpoint-mobile: 768px;
+@media (max-width: $breakpoint-mobile) {
+  body {
+    font: 85% $font-stack;
+  }
+  .content h1,h2,h3,h4,h5 {
+    font: 75% $font-stack;
+  }
+}
+

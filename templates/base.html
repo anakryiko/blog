@@ -1,0 +1,85 @@
+{% import 'macros.html' as macros %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+
+	<meta name='theme-color' content='#ffffff'>
+	<meta name='msapplication-TileColor' content='#da532c'>
+	<link rel='manifest' href='{{config.extra.favicon.webmanifest}}'>
+	<link rel='mask-icon' href='{{config.extra.favicon.safari_pinned_tab}}' color='#5bbad5' />
+	<link rel='icon' type='image/png' sizes='16x16' href='{{config.extra.favicon.favicon_16x16}}' />
+	<link rel='icon' type='image/png' sizes='32x32' href='{{config.extra.favicon.favicon_32x32}}' />
+	<link rel='apple-touch-icon' sizes='180x180' href='{{config.extra.favicon.apple_touch_icon}}' />
+
+	<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css' />
+	<link rel='stylesheet' href='{{ get_url(path='site.css') }}' />
+
+	<title>{% block title %}{{ config.title }}{% endblock title %}</title>
+
+	{% if config.extra.analytics.google %}
+	<script src='https://www.googletagmanager.com/gtag/js?id={{ config.extra.analytics.google }}' async></script>
+	<script type='text/javascript'>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', '{{ config.extra.analytics.google }}');
+	</script>
+	{% endif %}
+</head>
+
+<body class='site'>
+	{% block nav %}
+	<nav class='navbar is-light' role='navigation' aria-label='main navigation'>
+		<div class='container'>
+			<div class='navbar-brand'>
+				<a class='navbar-item has-text-weight-bold' href='/'>{{ config.title }}</a>
+				<a role='button' class='navbar-burger burger' aria-label='menu' aria-expanded='false'
+					data-target='navMenu'>
+					<span aria-hidden='true'></span>
+					<span aria-hidden='true'></span>
+					<span aria-hidden='true'></span>
+				</a>
+			</div>
+
+			<div id='navMenu' class='navbar-menu'>
+				<div class='navbar-end'>
+					{% for item in config.extra.navbar_items %}
+					<a href='{{ item.url | replace(from='$BASE_URL', to=config.base_url) }}' class='navbar-item'>
+						{{ item.name }}
+					</a>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</nav>
+	{% endblock %}
+
+	{% block header %}
+	{% endblock %}
+
+	{% block main %}
+	{% endblock %}
+
+	{% block footer %}
+	<footer class='footer py-4'>
+		<div class='has-text-centered'>
+			<p>
+				<span class='has-text-weight-bold'>
+					Powered by <a href="https://www.getzola.org/">Zola</a>
+				</span>
+			</p>
+		</div>
+	</footer>
+	{% endblock %}
+
+	<script src='https://kit.fontawesome.com/201b8d5e05.js' crossorigin='anonymous'></script>
+
+	{% block custom_javascript %}
+	{% endblock %}
+</body>
+
+</html>

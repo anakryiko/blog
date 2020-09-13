@@ -1,0 +1,42 @@
+base_url = "https://nakryiko.com"
+
+compile_sass = true
+title = "Andrii Nakryiko's Blog"
+description = "Blog about technical things I work on."
+highlight_code = true
+highlight_theme = "gruvbox-dark"
+generate_feed = true
+
+taxonomies = [
+    { name = "categories", rss = true, paginate_by=5 },
+    { name = "tags", rss = true, paginate_by=5 },
+]
+
+[extra]
+author = "Andrii Nakryiko"
+
+navbar_items = [
+	{ url = "$BASE_URL/", name = "Home" },
+	{ url = "$BASE_URL/posts", name = "Posts" },
+	{ url = "$BASE_URL/atom.xml", name = "RSS" },
+]
+
+[extra.favicon]
+favicon_16x16 = "/icons/favicon-16x16.png"
+favicon_32x32 = "/icons/favicon-32x32.png"
+apple_touch_icon = "/icons/apple-touch-icon.png"
+safari_pinned_tab = "/icons/safari-pinned-tab.svg"
+webmanifest = "/icons/site.webmanifest"
+
+[extra.author]
+name = "Andrii Nakryiko"
+avatar = "/images/avatar.jpg"
+
+[extra.social]
+github = "anakryiko"
+linkedin = "anakryiko"
+twitter = "anakryiko"
+
+[extra.analytics]
+google = "UA-177860977-1"
+
