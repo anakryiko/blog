@@ -593,7 +593,7 @@ duplicated BTF data contained enough information to infer this.
      alt="De-duplicated and reconstructed BTF type graph after pass #5" />
 </p>
 
-## Results
+# Results
 
 I ran the described algorithm against version 4.11 of Linux, built with DWARF
 debug information. Performance numbers are preliminary, but on my machine it
@@ -628,7 +628,7 @@ no type merging and no special handling of `BTF_KIND_FWD`.
 This shows that doing type reconstruction/merging is critical to achieving
 compactness (in addition to removing duplicate partial types).
 
-## What's next?
+# What's next?
 
 Since the post was originally published in 2018, BTF dedup was successfully
 added to [libbpf](https://github.com/libbpf/libbpf) and used in pahole. It
