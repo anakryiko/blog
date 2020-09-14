@@ -1,5 +1,5 @@
 +++
-title = "BPF Portability and CO-RE"
+title = "BPF portability and CO-RE"
 date = 2020-02-19
 
 [extra]
