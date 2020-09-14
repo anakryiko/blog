@@ -15,7 +15,7 @@
 						<div class='column'>
 							{{ macros::page_publish_metadata(page=page) }}
 						</div>
-						<div class='column is-pulled-right'>
+						<div class='column is-narrow'>
 							{{ macros::page_content_metadata(page=page) }}
 						</div>
 					</div>
@@ -25,7 +25,7 @@
 							{{ macros::render_categories(categories=page.taxonomies.categories) }}
 							{% endif %}
 						</div>
-						<div class='column'>
+						<div class='column is-narrow'>
 							{% if page.taxonomies.tags %}
 							{{ macros::render_tags(tags=page.taxonomies.tags) }}
 							{% endif %}

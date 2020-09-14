@@ -50,8 +50,7 @@
 <p class='has-text-grey'>
 	<span class='icon'>
 		<i class='far fa-calendar-alt'></i>
-	</span>
-	<time datetime='{{page.date}}'>{{ page.date | date(format='%b %d, %Y') }}</time>
+	</span><time datetime='{{page.date}}'>{{ page.date | date(format='%b %d, %Y') }}</time>
 </p>
 {% endmacro %}
 
@@ -59,12 +58,10 @@
 <p class='has-text-grey'>
 	<span class='icon'>
 		<i class='far fa-clock'></i>
-	</span>
-	{{page.reading_time}} min,
+	</span>{{page.reading_time}} min,
 	<span class='icon'>
 		<i class='fas fa-pencil-alt'></i>
-	</span>
-	{{page.word_count}} words
+	</span>{{page.word_count}} words
 </p>
 {% endmacro %}
 

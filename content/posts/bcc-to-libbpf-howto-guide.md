@@ -2,9 +2,12 @@
 title = "BCC to libbpf conversion guidelines"
 date = 2020-02-20
 
+[extra]
+toc = true
+
 [taxonomies]
 categories = ["BPF"]
-tags = ["bpf", "co-re", "bcc"]
+tags = ["bpf", "bcc"]
 +++
 
 A practical guide to converting your BCC-based BPF application to libbpf and

@@ -2,12 +2,12 @@
 title = "BTF deduplication and Linux kernel BTF"
 date = 2018-11-14
 
-[taxonomies]
-categories = ["BPF"]
-tags = ["bpf", "btf", "linux", "algorithms"]
-
 [extra]
 toc = false
+
+[taxonomies]
+categories = ["BPF"]
+tags = ["btf", "algorithms"]
 +++
 
 *This is a slightly updated (in 2020) version of [the

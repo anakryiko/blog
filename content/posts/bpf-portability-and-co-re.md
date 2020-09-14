@@ -2,9 +2,12 @@
 title = "BPF Portability and CO-RE"
 date = 2020-02-19
 
+[extra]
+toc = true
+
 [taxonomies]
 categories = ["BPF"]
-tags = ["bpf", "co-re", "linux"]
+tags = ["bpf", "linux"]
 +++
 
 What does it mean for a BPF application to be portable? And why it's actually
