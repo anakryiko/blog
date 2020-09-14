@@ -1,5 +1,5 @@
 +++
-title = "BCC to libbpf conversion guidelines"
+title = "BCC to libbpf conversion guide"
 date = 2020-02-20
 
 [extra]
