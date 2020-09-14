@@ -3,7 +3,7 @@ title = "BTF deduplication and Linux kernel BTF"
 date = 2018-11-14
 
 [extra]
-toc = false
+toc = true
 
 [taxonomies]
 categories = ["BPF"]
