@@ -13,11 +13,11 @@ tags = ["bpf", "bcc"]
 A practical guide to converting your BCC-based BPF application to libbpf and
 [BPF CO-RE](/posts/bpf-portability-and-co-re/).
 
+<!-- more -->
+
 *This post was originally posted on Facebook's [BPF
 blog](https://facebookmicrosites.github.io/bpf/blog/2020/02/20/bcc-to-libbpf-howto-guide.html).
 This version has only a few minor fixes and adjustments.*
-
-<!-- more -->
 
 ## Why libbpf and BPF CO-RE?
 
