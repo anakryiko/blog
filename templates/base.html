@@ -19,7 +19,7 @@
 
 	<title>{% block title %}{{ config.title }}{% endblock title %}</title>
 
-	{% if config.extra.analytics.google %}
+	{% if config.extra.analytics.google and config.base_url is not matching("127\.0\.0\.1|localhost") %}
 	<script src='https://www.googletagmanager.com/gtag/js?id={{ config.extra.analytics.google }}' async></script>
 	<script type='text/javascript'>
 		window.dataLayer = window.dataLayer || [];
