@@ -1,6 +1,6 @@
 +++
-title = "Building first BPF application with libbpf-boostrap"
-date = 2020-11-28
+title = "Building BPF applications with libbpf-boostrap"
+date = 2020-11-29
 
 [extra]
 toc = true
