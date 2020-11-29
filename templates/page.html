@@ -16,7 +16,9 @@
 							{{ macros::page_publish_metadata(page=page) }}
 						</div>
 						<div class='column is-narrow'>
-							{{ macros::page_content_metadata(page=page) }}
+							{% if config.base_url is matching("127\.0\.0\.1|localhost") %}
+								{{ macros::page_content_metadata(page=page) }}
+							{% endif %}
 						</div>
 					</div>
 					<div class='columns is-mobile'>
