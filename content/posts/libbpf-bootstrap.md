@@ -1,5 +1,5 @@
 +++
-title = "Building BPF applications with libbpf-boostrap"
+title = "Building BPF applications with libbpf-bootstrap"
 date = 2020-11-29
 
 [extra]
@@ -18,7 +18,7 @@ libbpf-bootstrap provides and how everything is tied together.
 
 <!-- more -->
 
-# Why libbpf-boostrap?
+# Why libbpf-bootstrap?
 
 BPF is an amazing kernel technology, which allows anyone to take a pick
 under the cover of how kernel functions without intense kernel development
@@ -70,7 +70,7 @@ Additionally, `bootstrap` demonstrates BPF global variables usage (Linux 5.5+)
 and [BPF ring buffer](/posts/bpf-ringbuf) use (Linux 5.8+). Neither of those
 features are mandatory to build useful BPF application, but they bring huge
 usability improvements and are the way that modern BPF application are built,
-so I've added example of using them into a basic `boostrap` example.
+so I've added example of using them into a basic `bootstrap` example.
 
 # Prerequisites
 
@@ -335,7 +335,7 @@ it.
 > post](/posts/bcc-to-libbpf-howto-guide/#bpf-skeleton-and-bpf-app-lifecycle)
 > for some more details about BPF skeleton.
 
-libbpf-boostrap BPF skeletons are generated into `src/.output/<app>.skel.h`
+libbpf-bootstrap BPF skeletons are generated into `src/.output/<app>.skel.h`
 after successful `make` invocation. To get a better intuition about it, here's
 a high-level overview of the skeleton for `minimal.bpf.c`:
 
