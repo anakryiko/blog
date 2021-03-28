@@ -670,8 +670,9 @@ will finish in a limited amount of iterations).
 
 ### Helper sub-programs
 
-If you are using static helper functions, they have to be marked as `static
-__always_inline`, due to current limitations in libbpf’s handling of them:
+If you are using static functions and running on kernels older than
+4.16, you'll have to mark such function as alway inlined with `static
+__always_inline`, so that BPF verifier will see them as a single big function:
 
 ```c
 static __always_inline unsigned long
@@ -681,10 +682,27 @@ probe_read_lim(void *dst, void *src, unsigned long len, unsigned long max)
 }
 ```
 
-Non-inlined global functions are also supported starting from 5.5 kernels, but
-they have different semantics and verification constraints than static
-functions. Make sure to check them out as well!
+But as of 4.16 (see
+[commit](https://github.com/torvalds/linux/commit/cc8b0b92a1699bc32f7fec71daa2bfc90de43a4d)),
+kernel supports BPF-to-BPF function calls within your BPF application.  libbpf
+(v0.2+) has full generic support for this feature as well, making sure that
+all the right code relocations and adjustments are performed. So feel free to
+drop `__always_inline`. You might even consider enforcing no inlining with
+`__noinline`, which quite often will improve code generation and will avoid
+some of the common BPF verification failures due to unwanted register-to-stack
+spilling:
 
+```c
+static __noinline unsigned long
+probe_read_lim(void *dst, void *src, unsigned long len, unsigned long max)
+{
+    ...
+}
+```
+
+Non-inlined *global* functions are also supported starting from 5.5 kernels,
+but they have different semantics and verification constraints than static
+functions. Make sure to check them out as well!
 
 ### bpf_printk debugging
 
