@@ -20,7 +20,9 @@ this problem.
 
 *This post was originally posted on Facebook's [BPF
 blog](https://facebookmicrosites.github.io/bpf/blog/2020/02/19/bpf-portability-and-co-re.html).
-This version has only a few minor fixes and adjustments.*
+If you are curious about some of the new things that happened since BPF CO-RE
+got introduced initially, please see ["BPF CO-RE as of
+2021"](#bpf-co-re-as-of-2021) section below.*
 
 ## BPF: state of the art
 
@@ -653,6 +655,58 @@ familiar workflow of compiling C code into binary and distributing lightweight
 binaries around. There is no more need to drag along a heavy-weight compiler
 library and pay precious runtime resources for runtime compilation. There is
 no more need to catch trivial compilation errors in runtime, either.
+
+## BPF CO-RE as of 2021
+
+As of 2021, BPF CO-RE is now a mature technology used across a wide variety of
+projects.
+
+At Facebook, BPF CO-RE powers multiple production BPF-based applications
+successfully, handling both simple cases of changing field offsets and much
+more advanced cases of kernel data structures being removed, renamed, or
+completely changed. All within a single compiled-once BPF application.
+
+Since the introduction of BPF CO-RE, [more than
+25](https://github.com/iovisor/bcc/blob/master/libbpf-tools/Makefile#L18) BCC
+tools got converted to libbpf and BPF CO-RE (check out
+[libbpf-tools](https://github.com/iovisor/bcc/blob/master/libbpf-tools)). As
+more and more Linux distributions enable kernel BTF by default (see [the
+list](https://github.com/libbpf/libbpf#bpf-co-re-compile-once--run-everywhere)),
+BPF CO-RE-based tools become more widely applicable and more efficient
+replacements for heavy-weight Python-based BCC tools. And that's the way
+forward, as emphasized by Brendan Gregg in his ["BPF binaries: BTF, CO-RE, and
+the future of BPF perf
+tools"](http://www.brendangregg.com/blog/2020-11-04/bpf-co-re-btf-libbpf.html)
+blog post.
+
+BPF CO-RE is gaining a rapid adoption across various areas, powering efficient
+BPF applications. It is used in tracing and performance monitoring, security
+and audit, even networking BPF applications. Anywhere from tiny embedded
+systems to huge production servers.
+[libbpf-bootstrap](https://github.com/libbpf/libbpf-bootstrap) project was
+created to simplify starting BPF development with libbpf and BPF CO-RE. So
+make sure to check out ["Building BPF applications with
+libbpf-bootstrap"](/posts/libbpf-bootstrap) blog post, if you are interested.
+
+On the more technical level, in addition to already described field
+relocations, BPF CO-RE has gained support for:
+  * type size and existences relocations. When types are added, removed, or
+    renamed, it's important to be able to detect this and adjust BPF
+    application logic accordingly. See `bpf_core_type_exists()` and
+    `bpf_core_type_size()` macros, provided by libbpf.
+  * enum relocations (existence and value). Some internal, non-UAPI kernel
+    enums do change across kernel versions, or even depend on exact config
+    used for kernel compilation (e.g., `enum cgroup_subsys_id`, see [BPF
+    selftest](https://github.com/torvalds/linux/blob/master/tools/testing/selftests/bpf/progs/profiler.inc.h#L260-L262)
+    dealing with it), making it impossible to hard-code any specific value
+    reliably. Enum relocations (`bpf_core_enum_value_exists()` and
+    `bpf_core_enum_value()` macros, provided by libbpf) allow to check
+    existence of a specific enum value and capture its value. One important
+    application of this is detection of availability of new BPF helpers, and
+    falling back to older one, if kernel is too old.
+
+When compiled with read-only global variables, both are indispensable to
+perform simple and reliable kernel feature detection from BPF side.
 
 ## References
 
