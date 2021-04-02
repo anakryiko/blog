@@ -1,6 +1,12 @@
 +++
-title = "BPF portability and CO-RE"
 date = 2020-02-19
+updated = 2021-04-02
+title = "BPF CO-RE (Compile Once – Run Everywhere)"
+description = '''
+Why most BPF applications have to be portable across multiple Linux kernels
+and how BPF CO-RE (Compile Once – Run Everywhere) technology makes that
+possible and easy.
+'''
 
 [extra]
 toc = true

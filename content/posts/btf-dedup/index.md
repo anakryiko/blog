@@ -1,6 +1,13 @@
 +++
-title = "BTF deduplication and Linux kernel BTF"
 date = 2018-11-14
+updated = 2021-04-02
+title = "BTF deduplication and Linux kernel BTF"
+description = '''
+Description of BTF deduplication algorithm, which enables compact BTF type
+information in Linux kernel. It enabled BPF CO-RE (Compile Once – Run
+Everywhere), building modern portable BPF applications and many modern and
+powerful BPF features in Linux kernel.
+'''
 
 [extra]
 toc = true

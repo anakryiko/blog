@@ -1,6 +1,14 @@
 +++
-title = "Building BPF applications with libbpf-bootstrap"
 date = 2020-11-29
+updated = 2021-04-02
+title = "Building BPF applications with libbpf-bootstrap"
+description = '''
+Get started with your own BPF application quickly and painlessly with
+libbpf-bootstrap scaffolding, which takes care of all the mundane setup steps
+and lets you dive right into BPF fun and minimize the necessary boilerplate.
+We'll take a look at what libbpf-bootstrap provides and how everything is tied
+together.
+'''
 
 [extra]
 toc = true

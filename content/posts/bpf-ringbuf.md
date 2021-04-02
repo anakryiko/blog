@@ -1,6 +1,12 @@
 +++
-title = "BPF ring buffer"
 date = 2020-10-26
+updated = 2021-04-02
+title = "BPF ring buffer"
+description = '''
+BPF ring buffer (ringbuf) and how it is similar and different from BPF perf
+buffer. BPF ringbuf's APIs, performance and usability advantages. With
+examples of source code.
+'''
 
 [extra]
 toc = true

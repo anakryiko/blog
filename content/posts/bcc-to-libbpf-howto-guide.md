@@ -1,6 +1,11 @@
 +++
-title = "BCC to libbpf conversion guide"
 date = 2020-02-20
+updated = 2021-04-02
+title = "BCC to libbpf conversion guide"
+description = '''
+A practical guide to converting your BCC-based BPF application to libbpf and
+BPF CO-RE (Compile Once – Run Everywhere).
+'''
 
 [extra]
 toc = true
