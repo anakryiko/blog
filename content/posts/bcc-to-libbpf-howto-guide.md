@@ -22,7 +22,9 @@ A practical guide to converting your BCC-based BPF application to libbpf and
 
 *This post was originally posted on Facebook's [BPF
 blog](https://facebookmicrosites.github.io/bpf/blog/2020/02/20/bcc-to-libbpf-howto-guide.html).
-This version has only a few minor fixes and adjustments.*
+This version has some minor fixes and adjustments. It also has as an updated
+section on [using BPF subprograms](#helper-sub-programs) to reflect new libbpf
+features added since the original publication.*
 
 ## Why libbpf and BPF CO-RE?
 

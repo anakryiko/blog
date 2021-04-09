@@ -23,9 +23,9 @@ first published at Facebook's [BPF
 blog](https://facebookmicrosites.github.io/bpf/blog/) back in 2018. BTF
 deduplication is what got me started with BPF and Linux kernel development, so
 I'm re-publishing it here retroactively for a more complete story of my
-involvement with BPF. Please also check out updated ["What's next
-section"](#what-s-next) for a short summary on what happened in BPF world after
-BTF dedup was developed.*
+involvement with BPF. Please also check out updated ["What's
+next"](#what-s-next) section for a short summary on what happened in BPF world
+after BTF dedup was developed.*
 
 <!-- more -->
 
