@@ -26,7 +26,9 @@ this problem.
 blog](https://facebookmicrosites.github.io/bpf/blog/2020/02/19/bpf-portability-and-co-re.html).
 If you are curious about some of the new things that happened since BPF CO-RE
 got introduced initially, please see ["BPF CO-RE as of
-2021"](#bpf-co-re-as-of-2021) section below.*
+2021"](#bpf-co-re-as-of-2021) section below. There is now also the ["BPF CO-RE
+reference guide"](/posts/bpf-core-reference-guide/) with a lot of practical
+tips on using BPF CO-RE features in real-world BPF applications.*
 
 ## BPF: state of the art
 
@@ -711,6 +713,11 @@ relocations, BPF CO-RE has gained support for:
 
 When compiled with read-only global variables, both are indispensable to
 perform simple and reliable kernel feature detection from BPF side.
+
+There is now also a dedicated [BPF CO-RE reference
+guide](/posts/bpf-core-reference-guide/) post with practical guidance to all
+BPF CO-RE features and tips on how to apply them when developing real-world
+BPF application.
 
 ## References
 
