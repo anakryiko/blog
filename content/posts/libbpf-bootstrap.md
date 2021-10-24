@@ -24,8 +24,6 @@ which takes care of all the mundane setup steps and lets you dive right into
 BPF fun and minimize the necessary boilerplate. We'll take a look at what
 libbpf-bootstrap provides and how everything is tied together.
 
-<!-- more -->
-
 # Why libbpf-bootstrap?
 
 BPF is an amazing kernel technology, which allows anyone to take a pick

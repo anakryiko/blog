@@ -22,8 +22,6 @@ this post we'll see what are the challenges of writing BPF programs that can
 work across multiple kernel versions and how BPF CO-RE is helping to address
 this problem.
 
-<!-- more -->
-
 *This post was originally posted on Facebook's [BPF
 blog](https://facebookmicrosites.github.io/bpf/blog/2020/02/19/bpf-portability-and-co-re.html).
 If you are curious about some of the new things that happened since BPF CO-RE

@@ -25,8 +25,6 @@ both synthetic and real-world benchmarks show that in almost all cases so think
 about making it a default choice for sending data from the BPF program to
 user-space.
 
-<!-- more -->
-
 # BPF ringbuf vs BPF perfbuf
 
 Today, whenever a BPF program needs to send collected data to user-space for

@@ -27,8 +27,6 @@ involvement with BPF. Please also check out updated ["What's
 next"](#what-s-next) section for a short summary on what happened in BPF world
 after BTF dedup was developed.*
 
-<!-- more -->
-
 [BTF](https://www.kernel.org/doc/html/latest/bpf/btf.html) (BPF Type Format)
 is a compact format for representing type information. Modern
 [BPF](https://lwn.net/Articles/740157/) technology relies heavily on BTF
