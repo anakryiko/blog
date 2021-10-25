@@ -84,7 +84,7 @@ struct my_kernel_type *t = ...;
 char str[32];
 
 /* read string as CO-RE-relocatable */
-bpf_core_read_str(&p, sizeof(p), &t->name);
+bpf_core_read_str(str, sizeof(str), &t->type);
 ```
 
 Take a second to think why the first example wouldn't work with `bpf_core_read_str()` (*hint: you'd be interpreting **pointer value** as a C string itself*) and why the second one can't be done as a pointer read and then string read (*hint: the string itself is part of a struct, so there is no dedicated pointer, it's located at **an offset relative** to where `t` pointer points to*). It's subtle and thankfully doesn't come up often, but it's extremely confusing in practice if one doesn't recognize the difference.
