@@ -99,7 +99,7 @@ Let's take a look at an example of reading running process's main executable nam
 struct task_struct *t = ...;
 const char *name;
 
-name = t->mm->binfmt->executable->fpath.dentry->d_name.name;
+name = t->mm->exe_file->fpath.dentry->d_name.name;
 
 /* now read string contents with bpf_probe_read_kernel_str() */
 ```
@@ -109,15 +109,13 @@ Note that sequence of pointer dereferences, mixed in with some sub-struct access
 ```c
 struct task_struct *t = ...;
 struct mm_struct *mm;
-struct linux_binfmt *binfmt;
-struct file *executable;
+struct file *exe_file;
 struct dentry *dentry;
 const char *name;
 
 bpf_core_read(&mm, 8, &t->mm);
-bpf_core_read(&binfmt, 8, &mm->binfmt);
-bpf_core_read(&executable, 8, &binfmt->executable);
-bpf_core_read(&dentry, 8, &executable->fpath.dentry);
+bpf_core_read(&exe_file, 8, &mm->exe_file);
+bpf_core_read(&dentry, 8, &exe_file->path.dentry);
 bpf_core_read(&name, 8, &dentry->d_name.name);
 
 /* now read string contents with bpf_probe_read_kernel_str() */
@@ -131,7 +129,7 @@ To make such multi-step reads easier to write, libbpf provides the `BPF_CORE_REA
 struct task_struct *t = ...;
 const char *name;
 
-name = BPF_CORE_READ(t, mm, binfmt, executable, fpath.dentry, d_name.name);
+name = BPF_CORE_READ(t, mm, exe_file, fpath.dentry, d_name.name);
 
 /* now read string contents with bpf_probe_read_kernel_str() */
 ```
@@ -139,10 +137,10 @@ name = BPF_CORE_READ(t, mm, binfmt, executable, fpath.dentry, d_name.name);
 Compare a "native C" example vs the one with `BPF_CORE_READ()`:
 ```c
 /* direct pointer dereference */
-name = t->mm->binfmt->executable->fpath.dentry->d_name.name;
+name = t->mm->exe_file->fpath.dentry->d_name.name;
 
 /* using BPF_CORE_READ() helper */
-name = BPF_CORE_READ(t, mm, binfmt, executable, fpath.dentry, d_name.name);
+name = BPF_CORE_READ(t, mm, exe_file, fpath.dentry, d_name.name);
 ```
 
 Basically, each pointer dereference turns into a comma in the macro invocation. Each sub-struct access is kept as is. Pretty straightforward.
