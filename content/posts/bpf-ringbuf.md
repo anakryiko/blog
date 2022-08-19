@@ -165,7 +165,7 @@ post-processing (in our demo, just printf()'ing all that into the stdout).
 Here's how the output from all three examples should look like (don't forget to
 run it with `sudo`):
 
-```shell
+```bash
 $ sudo ./ringbuf-reserve-commit    # or ./ringbuf-output, or ./perfbuf-output
 TIME     EVENT PID     COMM             FILENAME
 19:17:39 EXEC  3232062 sh               /bin/sh

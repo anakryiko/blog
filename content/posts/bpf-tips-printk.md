@@ -33,7 +33,7 @@ output. If you'd like to follow along, make sure to clone
 [minimap.bpf.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/examples/c/minimal.bpf.c)
 in your editor:
 
-```shell
+```bash
 $ # note --recursive to checkout libbpf submodule
 $ git clone --recursive https://github.com/libbpf/libbpf-bootstrap
 $ cd libbpf-bootstrap/examples/c
@@ -99,7 +99,7 @@ Once you get past these limitations, though, you'll find out that
 special file at `/sys/kernel/debug/tracing/trace_pipe`. You need to be root to
 read it, so use `sudo cat` to watch your debug logs:
 
-```shell
+```bash
 $ sudo cat  /sys/kernel/debug/tracing/trace_pipe
    <...>-2328034 [007] d... 5344927.816042: bpf_trace_printk: Hello, world, from BPF! My PID is 2328034
 

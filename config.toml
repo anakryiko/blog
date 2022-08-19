@@ -3,14 +3,16 @@ base_url = "https://nakryiko.com"
 compile_sass = true
 title = "Andrii Nakryiko's Blog"
 description = "Blog about technical things I work on."
-highlight_code = true
-highlight_theme = "gruvbox-dark"
 generate_feed = true
 
 taxonomies = [
     { name = "categories", rss = true, paginate_by=5 },
     { name = "tags", rss = true, paginate_by=5 },
 ]
+
+[markdown]
+highlight_code = true
+highlight_theme = "gruvbox-dark"
 
 [extra]
 author = "Andrii Nakryiko"

@@ -130,7 +130,7 @@ APIs.
 Here's the contents of the [`libbpf-bootstrap`](https://github.com/libbpf/libbpf-bootstrap)
 repository:
 
-```shell
+```bash
 $ tree
 .
 ├── libbpf
@@ -302,7 +302,7 @@ string to the special file at `/sys/kernel/debug/tracing/trace_pipe`, which you
 can cat to see its contents from the console (make sure you use `sudo` or run
 under root):
 
-```shell
+```bash
 $ sudo cat /sys/kernel/debug/tracing/trace_pipe
 	<...>-3840345 [010] d... 3220701.101143: bpf_trace_printk: BPF triggered from PID 3840345.
 	<...>-3840345 [010] d... 3220702.101265: bpf_trace_printk: BPF triggered from PID 3840345.
@@ -541,7 +541,7 @@ This is a list of available applications. If you copy/paste `minimal` or
 here to make it build. Each app defines corresponding make target, so you can
 build just relevant files with:
 
-```shell
+```bash
 $ make minimal
 ```
 

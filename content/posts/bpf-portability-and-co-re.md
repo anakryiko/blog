@@ -225,7 +225,7 @@ authoritative BTF information (defining, among other things, exact struct
 layouts) through sysfs at `/sys/kernel/btf/vmlinux`. Try it for yourself,
 with:
 
-```shell
+```bash
 $ bpftool btf dump file /sys/kernel/btf/vmlinux format c
 ```
 
@@ -308,7 +308,7 @@ possible to use it to generate a big header ("**vmlinux.h**") with all
 internal kernel types and avoid dependency on system-wide kernel headers
 altogether. You can get it with bpftool:
 
-```shell
+```bash
 $ bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
 ```
 

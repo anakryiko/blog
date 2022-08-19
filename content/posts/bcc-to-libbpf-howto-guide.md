@@ -735,7 +735,7 @@ bpf_printk("ts: %lu, comm: %s, pid: %d\n", ts, comm, pid);
 Logged messages can be read from a special
 `/sys/kernel/debug/tracing/trace_pipe` file:
 
-```shell
+```bash
 $ sudo cat /sys/kernel/debug/tracing/trace_pipe
 ...
       [...] ts: 342697952554659, comm: runqslower, pid: 378
