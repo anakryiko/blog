@@ -2,6 +2,11 @@
 date = 2022-08-22
 title = "Journey to libbpf 1.0"
 description = '''
+The road to libbpf 1.0 was long, but we've finally arrived!
+What went into libbpf 1.0. What are the main breaking changes.
+What exciting new features were added. And great lengths libbpf
+goes to to ensure best user experience when dealing with
+a complicated world of BPF.
 '''
 
 [extra]
