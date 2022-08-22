@@ -18,7 +18,7 @@ tags = ["bpf", "libbpf"]
 +++
 
 <p style="text-align:center;">
-<img src="/images/libbpf-textured-header-tight.jpg" width="100%"
+<img src="/images/libbpf-header-scaled.jpg" width="100%"
      title="Libbpf logo"
      alt="Libbpf logo" />
 </p>
