@@ -2,9 +2,10 @@
 date = 2022-08-22
 title = "Journey to libbpf 1.0"
 description = '''
+
 The road to libbpf 1.0 was long, but we've finally arrived!
-What went into libbpf 1.0. What are the main breaking changes.
-What exciting new features were added. And great lengths libbpf
+What's new in libbpf 1.0. Main breaking changes.
+New and exciting features. And great lengths libbpf
 goes to to ensure best user experience when dealing with
 a complicated world of BPF.
 '''
@@ -122,7 +123,7 @@ be offended if I missed or skipped a favorite feature of yours.
 
 Libbpf started out as internal Linux kernel project and inherited some of
 kernel-specific traits and conventions. One of the most prominent and
-pervasive thoughout API was a convention to return error code embedded into
+pervasive throughout API was a convention to return error code embedded into
 the pointer. Almost all pointer-returning APIs in libbpf on failure would
 return error code (one of [many](https://github.com/torvalds/linux/blob/master/include/uapi/asm-generic/errno-base.h)
 `-Exxx` [values](https://github.com/torvalds/linux/blob/master/include/uapi/asm-generic/errno.h)) encoded as a pointer. And while convenient for those
@@ -282,7 +283,15 @@ the following public headers:
 
 ## Graceful degradation and taking care of kernel differences
 
-While new features are exciting and most visible, I think it's important to appreciate small and mostly invisible things that libbpf is doing for the user to simplify their life and hide as many different quirks and limitations of different (especially older) kernel and Clang versions (and even some gotchas of particular Linux distros), as possible. It is unsung part of libbpf and a lot of thought and collective work went into making sure that things that can be abstracted away and handled transparently without user involvement "just work". Here's a list of just some of the stuff that libbpf is doing on behalf of users, so they don't have to.
+While new features are exciting and most visible, I think it's important to
+appreciate small and mostly invisible things that libbpf is doing for the
+user to simplify their life and hide as many different quirks and limitations
+of different (especially older) kernel and Clang versions (and even some
+gotchas of particular Linux distros), as possible. It is unsung part of
+libbpf and a lot of thought and collective work went into making sure that
+things that can be abstracted away and handled transparently without user
+involvement "just work". Here's a list of just some of the stuff that libbpf
+is doing on behalf of users, so they don't have to.
 
   - `bpf_probe_read_{kernel, user}()` is automatically "downgraded" to
     `bpf_probe_read()` on old kernels, so user should freely use
@@ -314,7 +323,7 @@ While new features are exciting and most visible, I think it's important to appr
     relocation). This significantly improves usefulness of verification
     failure log.
   - for cases when it's safe to do so, libbpf will auto-adjust BPF map
-    parameters, if necessarty. E.g., BPF ringbuf size will be rounded up to a
+    parameters, if necessary. E.g., BPF ringbuf size will be rounded up to a
     proper multiple of page size on host system. Or key/value BTF type
     information will be dropped, if libbpf believes that specific BPF map
     doesn't support specifying BTF type ID; it will still calculate and
@@ -350,7 +359,7 @@ Libbpf has come a long way since its early days in terms of supporting all the
 typical C language features one would expect from user-space code base:
   - There are no restrictions on number of BPF programs and their `SEC
     ()` annotation uniqueness.
-  - Users don't have to ``__always_inline`` their C functions (a.k.a. BPF
+  - Users don't have to `__always_inline` their C functions (a.k.a. BPF
     subprograms) anymore, libbpf is smart enough to figure out which ones are
     used by each BPF program and perform code transformations to make sure
     BPF verifier gets correct final BPF assembly instructions.
@@ -364,13 +373,13 @@ typical C language features one would expect from user-space code base:
     together into a final `.bpf.o` file. Static linking is normally performed
     through `bpftool gen object` command, but it is also available as public
     APIs for programmatic use in more advanced applications. Static linking
-    means that **BPF static libraries** are now possible and supported! This
-    allows to structure user's application in the way that makes sense for
+    means that **BPF static libraries** are now possible and supported! All
+    this allows to structure user's application in the way that makes sense for
     long-term maintainability and code reuse, instead of cramming all the
     code into single text file (even if through `#include`-ing `.c` files as
     if they were C headers). This also means `extern` subprograms, maps, and
-    variables declarations are supported and work as one'd expect with usual
-    user-space C application.
+    variables declarations are supported and are resolved as one'd expect
+    with usual user-space C application.
 
 Beyond that, BPF skeleton improves logistics of deploying, loading and
 interacting with BPF ELF object files. BPF skeleton allows to embed final BPF
@@ -407,7 +416,7 @@ To improve debuggability, we've also added ability to flexibly capture BPF
 verifier log into user-provided log buffers the help of `kernel_log_buf`,
 `kernel_log_size`, and `kernel_log_level` open options, passed into
 `bpf_object__open_file()` and `bpf_object__open_mem()`. To get even more
-control, each BPF program's logi buffer can be set and retrieved with
+control, each BPF program's log buffer can be set and retrieved with
 `bpf_program__[set_]log_buf()` and `bpf_program__[set_]log_level()` APIs.
 This control of BPF verifier log output comes very handy during active
 development and troubleshooting.
@@ -434,9 +443,11 @@ and is an integral part of libbpf, adding support for
 [BPF-side API](https://github.com/libbpf/libbpf/blob/master/src/usdt.bpf.h),
 and also note `BPF_USDT()` macro which allows to declaratively
 define expected USDT arguments for ease of use and better readability.
+
 Make sure to check a simple USDT BPF example from libbpf-bootstrap
 ([usdt.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/examples/c/usdt.c)
 and [usdt.bpf.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/examples/c/usdt.bpf.c)).
+
 Furthermore, thanks to the community, libbpf has support for *five* CPU
 architectures from day one:
   - x86-64 (amd64);
@@ -468,15 +479,17 @@ for `bpf_program__attach_ksyscall()` API for more details. But common
 scenarios are covered and well supported.
 
 **Improved uprobes.** User-space tracing (uprobes) with libbpf used to
-require user to do pretty much all the hard work themselves: figuring out exact binary paths, calculating function offsets within target process, manually attaching BPF programs, etc. Not anymore! Libbpf now supports
+require user to do pretty much all the hard work themselves: figuring out
+exact binary paths, calculating function offsets within target process,
+manually attaching BPF programs, etc. Not anymore! Libbpf now supports
 specifying target function by name and will do all the necessary calculations
 automatically. Additionally, libbpf is smart enough to figure out absolute
-path to system-wide libraries and binaries, so just annotating your
-BPF uprobe program as `SEC("uprobe/libc.so.6:malloc")` will
-allow to auto-attach to `malloc()` in your system's C runtime library.
-You still get full control, if you need to, of course,
-with `bpf_program__attach_uprobe()` API. Check uprobe example in
-libbpf-bootstrap ([uprobe.bpf.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/examples/c/uprobe.c)
+path to system-wide libraries and binaries, so just annotating your BPF
+uprobe program as `SEC("uprobe/libc.so.6:malloc")` will allow to auto-attach
+to `malloc()` in your system's C runtime library. You still get full control,
+if you need to, of course, with `bpf_program__attach_uprobe()` API. Check
+uprobe example in libbpf-bootstrap
+([uprobe.bpf.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/examples/c/uprobe.c)
 and [uprobe.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/examples/c/uprobe.c)).
 
 **Expanded set of supported architectures for kprobes** Thanks to community
