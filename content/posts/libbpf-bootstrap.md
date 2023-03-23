@@ -649,7 +649,7 @@ internals and observe how things really work under the hood.
 
 `bootstrap` is also using [argp API](https://www.gnu.org/software/libc/manual/html_node/Argp.html)
 (part of libc) for command-line argument parsing. Please check out
-["Step-by-Step into Argp" tutorial](http://download.savannah.nongnu.org/releases-noredirect/argpbook/step-by-step-into-argp.pdf)
+["Step-by-Step into Argp" tutorial](http://nongnu.askapache.com/argpbook/step-by-step-into-argp.pdf)
 for the great intro into the `argp` usage. This is how optional minimum process
 lifetime duration is parsed (see `min_duration_ns` read-only variable below;
 use `sudo ./bootstrap -d 100` to show only processes that existed for at least
