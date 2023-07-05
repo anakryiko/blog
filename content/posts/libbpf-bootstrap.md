@@ -818,7 +818,7 @@ variable. BPF code can also only ever *read* such variables. BPF verifier will
 
 `bootstrap` is using BPF ring buffer map heavily for preparing and sending
 data back to user-space. It's using the `bpf_ringbuf_reserve()`/`bpf_ringbuf_submit()`
-[combo](/posts/bpf-ringbuf/#bpf-ringbuf-reserve-commit-api) for best usability
+[combo](/posts/bpf-ringbuf/#bpf-ringbuf-reserve-submit-api) for best usability
 and performance. Please check the BPF ring buffer [post](/posts/bpf-ringbuf/)
 for more thorough coverage. That post goes through a very similar
 functionality in detail, looking at examples in a separate

@@ -20,7 +20,7 @@ There is now a new BPF data structure available: BPF ring buffer. It solves
 memory efficiency and event re-ordering problems of the BPF perf buffer (a de
 facto standard today for sending data from kernel to user-space) while meeting
 or beating its performance. It provides both perfbuf-compatible for easy
-migration, but also has the new reserve/commit API with better usability. Also,
+migration, but also has the new reserve/submit API with better usability. Also,
 both synthetic and real-world benchmarks show that in almost all cases so think
 about making it a default choice for sending data from the BPF program to
 user-space.
@@ -113,7 +113,7 @@ submitting data to user-space is an extremely efficient operation that can't
 possibly fail and doesn't perform any extra memory copies at all. If
 reservation failed due to running out of space in a buffer, at least you know
 this before you’ve spent all that work trying to record the data, just to be
-later dropped on the floor. `ringbuf-reserve-commit` example below will show
+later dropped on the floor. `ringbuf-reserve-submit` example below will show
 what that looks like in practice.
 
 ## Performance and applicability
@@ -166,7 +166,7 @@ Here's how the output from all three examples should look like (don't forget to
 run it with `sudo`):
 
 ```bash
-$ sudo ./ringbuf-reserve-commit    # or ./ringbuf-output, or ./perfbuf-output
+$ sudo ./ringbuf-reserve-submit    # or ./ringbuf-output, or ./perfbuf-output
 TIME     EVENT PID     COMM             FILENAME
 19:17:39 EXEC  3232062 sh               /bin/sh
 19:17:39 EXEC  3232062 timeout          /usr/bin/timeout
@@ -484,7 +484,7 @@ allows you to start consuming ring buffer data in exactly the same way:
  	}
 ```
 
-## BPF ringbuf: reserve/commit API
+## BPF ringbuf: reserve/submit API
 
 The goal for `bpf_ringbuf_output()` API was to allow a smooth transition from
 BPF perfbuf to BPF ringbuf without any substantial changes to BPF code. But it
@@ -500,24 +500,24 @@ just skip collecting it in the first place and save some resources for the
 consumer side to catch up faster. But it's not possible with the
 `xxx_output()`-style APIs.
 
-That's where the `bpf_ringbuf_reserve()`/`bpf_ringbuf_commit()` APIs come in
+That's where the `bpf_ringbuf_reserve()`/`bpf_ringbuf_submit()` APIs come in
 handy. Reserve allows you to do just that: reserve the space early on or
 determine that it's not possible (returning `NULL` in such case). If we can't
 get enough data to submit the sample, we can skip spending all the resources
 to capture data. But if the reservation succeeded, then we have a guarantee
 that, once we are done with data collection, publishing it to the user-space
 will never fail. I.e., if `bpf_ringbuf_reserve()` returns a non-NULL pointer,
-subsequent `bpf_ringbuf_commit()` will always succeed.
+subsequent `bpf_ringbuf_submit()` will always succeed.
 
 Further, the reserved space in the ring buffer itself is not visible to
-user-space until it is committed, so it can be freely used to construct
+user-space until it is submitted, so it can be freely used to construct
 a sample, however complicated and multi-step operation it is. And it obviates
 the need for extra memory copying and temporary storage spaces. The only
 restriction is that the size of the reservation has to be known to the BPF
 verifier at verification time, so samples with dynamic size would have to be
 handled with `bpf_ringbuf_output()` and pay the price of extra copy.
 
-But in most cases, reserve/commit is what you should prefer. Here's the diff
+But in most cases, reserve/submit is what you should prefer. Here's the diff
 for BPF program code (full
 [BPF](https://github.com/anakryiko/bpf-ringbuf-examples/blob/main/src/ringbuf-reserve-submit.bpf.c)
 and
@@ -583,7 +583,7 @@ it works for you that you won’t see the last N-1 samples, until the Nth sample
 arrives. This might or might not be a big deal for your particular case.
 
 BPF ringbuf went a different route with this. `bpf_ringbuf_output()` and
-`bpf_ringbuf_commit()` accept an extra flags argument and you can specify
+`bpf_ringbuf_submit()` accept an extra flags argument and you can specify
 either `BPF_RB_NO_WAKEUP` or `BPF_RB_FORCE_WAKEUP` flag. Specifying
 `BPF_RB_NO_WAKEUP` inhibits sending in-kernel data availability notification.
 While `BPF_RB_FORCE_WAKEUP` will force sending a notification. This allows for
