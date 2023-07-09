@@ -15,8 +15,6 @@ highlight_code = true
 highlight_theme = "gruvbox-dark"
 
 [extra]
-author = "Andrii Nakryiko"
-
 navbar_items = [
 	{ url = "$BASE_URL/", name = "Home" },
 	{ url = "$BASE_URL/posts", name = "Posts" },
