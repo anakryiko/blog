@@ -3,7 +3,7 @@ base_url = "https://nakryiko.com"
 compile_sass = true
 title = "Andrii Nakryiko's Blog"
 description = "Blog about technical things I work on."
-generate_feed = true
+generate_feeds = true
 
 taxonomies = [
     { name = "categories", rss = true, paginate_by=5 },

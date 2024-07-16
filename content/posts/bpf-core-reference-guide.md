@@ -99,12 +99,12 @@ Let's take a look at an example of reading running process's main executable nam
 struct task_struct *t = ...;
 const char *name;
 
-name = t->mm->exe_file->fpath.dentry->d_name.name;
+name = t->mm->exe_file->path.dentry->d_name.name;
 
 /* now read string contents with bpf_probe_read_kernel_str() */
 ```
 
-Note that sequence of pointer dereferences, mixed in with some sub-struct accesses (i.e., `fpath.dentry` and `d_name.name`). Doing something like that with `bpf_core_read()` quickly turns into a mess:
+Note that sequence of pointer dereferences, mixed in with some sub-struct accesses (i.e., `path.dentry` and `d_name.name`). Doing something like that with `bpf_core_read()` quickly turns into a mess:
 
 ```c
 struct task_struct *t = ...;
@@ -129,7 +129,7 @@ To make such multi-step reads easier to write, libbpf provides the `BPF_CORE_REA
 struct task_struct *t = ...;
 const char *name;
 
-name = BPF_CORE_READ(t, mm, exe_file, fpath.dentry, d_name.name);
+name = BPF_CORE_READ(t, mm, exe_file, path.dentry, d_name.name);
 
 /* now read string contents with bpf_probe_read_kernel_str() */
 ```
@@ -137,10 +137,10 @@ name = BPF_CORE_READ(t, mm, exe_file, fpath.dentry, d_name.name);
 Compare a "native C" example vs the one with `BPF_CORE_READ()`:
 ```c
 /* direct pointer dereference */
-name = t->mm->exe_file->fpath.dentry->d_name.name;
+name = t->mm->exe_file->path.dentry->d_name.name;
 
 /* using BPF_CORE_READ() helper */
-name = BPF_CORE_READ(t, mm, exe_file, fpath.dentry, d_name.name);
+name = BPF_CORE_READ(t, mm, exe_file, path.dentry, d_name.name);
 ```
 
 Basically, each pointer dereference turns into a comma in the macro invocation. Each sub-struct access is kept as is. Pretty straightforward.
@@ -156,7 +156,7 @@ struct task_struct *t = ...;
 const char *name;
 int err;
 
-err = BPF_CORE_READ_INTO(&name, t, mm, binfmt, executable, fpath.dentry, d_name.name);
+err = BPF_CORE_READ_INTO(&name, t, mm, binfmt, executable, path.dentry, d_name.name);
 if (err) { /* handle errors */ }
 /* now `name` contains the pointer to the string */
 ```
@@ -183,7 +183,7 @@ With such programs, if they are getting a pointer to some kernel type (e.g., `st
 struct task_struct *t = ...;
 const char *name;
 
-name = t->mm->binfmt->executable->fpath.dentry->d_name.name;
+name = t->mm->binfmt->executable->path.dentry->d_name.name;
 ```
 
 And yes, it is exactly identical to the "native C" hypothetical example. Keep in mind, though, that *to get the contents of the string* itself, you'd still need to use `bpf_probe_read_kernel_str()`.
