@@ -1,6 +1,6 @@
 +++
 date = 2020-11-29
-updated = 2021-04-02
+updated = 2025-03-17
 title = "Building BPF applications with libbpf-bootstrap"
 description = '''
 Get started with your own BPF application quickly and painlessly with
@@ -138,48 +138,72 @@ $ tree
 │   ... 
 ├── LICENSE
 ├── README.md
-├── src
-│   ├── bootstrap.bpf.c
-│   ├── bootstrap.c
-│   ├── bootstrap.h
-│   ├── Makefile
-│   ├── minimal.bpf.c
-│   ├── minimal.c
-│   ├── vmlinux_508.h
-│   └── vmlinux.h -> vmlinux_508.h
-└── tools
-    ├── bpftool
-    └── gen_vmlinux_h.sh
-
-16 directories, 85 files
+├── examples
+│   ├── c
+│   │   ├── bootstrap.bpf.c
+│   │   ├── bootstrap.c
+│   │   ├── bootstrap.h
+│   │   │   ...
+│   │   ├── Makefile
+│   │   ├── minimal.bpf.c
+│   │   ├── minimal.c
+│   │   │   ...
+│   │   ├── profile
+│   │   ├── profile.bpf.c
+│   │   ├── profile.c
+│   │   ├── profile.h
+│   │   │   ...
+│   ... 
+├── LICENSE
+├── README.md
+├── tools
+│   ├── cmake
+│   │   ├── FindBpfObject.cmake
+│   │   └── FindLibBpf.cmake
+│   └── gen_vmlinux_h.sh
+└── vmlinux.h
+    ├── Cargo.toml
+    ├── include
+    │   ├── aarch64
+    │   │   ├── vmlinux_6.6.h
+    │   │   └── vmlinux.h -> vmlinux_6.6.h
+    │   │   ...
+    │   ├── x86
+    │   │   ├── vmlinux_6.6.h
+    │   │   └── vmlinux.h -> vmlinux_6.6.h
+    │   └── x86_64 -> x86
+    ├── README.md
+    └── src
+        └── lib.rs
 ```
 
 `libbpf-bootstrap` bundles libbpf as a submodule in `libbpf/` sub-directory to
 avoid depending on system-wide libbpf availability and version.
 
-`tools/` contains `bpftool` binary, which is used to build [BPF
+`libbpf-bootstrap` uses `bpftool` tool to build [BPF
 skeletons](/posts/bcc-to-libbpf-howto-guide/#bpf-skeleton-and-bpf-app-lifecycle)
-of your BPF code. Similarly to libbpf, it's bundled to avoid depending on
-system-wide bpftool availability and its version being sufficiently
-up-to-date.
+of your BPF code. Similarly to libbpf, it's bundled through the use of
+submodule to avoid depending on system-wide bpftool availability and its
+version being sufficiently up-to-date.
 
-Additionally, bpftool can be used to generate your own `vmlinux.h` header
-with all the Linux kernel type definitions. Chances are you won't need to do
-that because libbpf-bootstrap already provides pre-generated
-[vmlinux.h](https://raw.githubusercontent.com/libbpf/libbpf-bootstrap/master/src/vmlinux_508.h)
-in `src/` sub-directory. It is based on default kernel config for Linux 5.8
-with a bunch of extra BPF-related functionality enabled. This means it should
-have lots of commonly needed kernel types and constants already. Due to [BPF
-CO-RE](/posts/bpf-portability-and-co-re/), `vmlinux.h` doesn't have to match
-your kernel configuration and version exactly. But if nevertheless you do need to
-generate your custom `vmlinux.h`, feel free to check
-[`tools/gen_vmlinux_h.sh`](https://github.com/libbpf/libbpf-bootstrap/blob/master/tools/gen_vmlinux_h.sh)
+Additionally, bpftool can be used to generate your own `vmlinux.h` header with
+all the Linux kernel type definitions. Chances are you won't need to do that, though,
+because `libbpf-bootstrap` already provides pre-generated
+[vmlinux.h](https://github.com/libbpf/vmlinux.h/blob/main/include/x86/vmlinux_6.6.h)
+from [libbpf/vmlinux.h](https://github.com/libbpf/vmlinux.h) repository, which
+is also used as `libbpf-bootstrap`'s submodule in `vmlinux.h/` sub-directory.
+That pre-built vmlinux.h (available for many supported architectures, including
+`x86-64` and `aarch64`) should have lots of commonly needed kernel types and
+constants already. Due to [BPF CO-RE](/posts/bpf-portability-and-co-re/),
+`vmlinux.h` doesn't have to match your kernel configuration and version
+exactly. But if nevertheless you do need to generate your custom `vmlinux.h`,
+feel free to check [`tools/gen_vmlinux_h.sh`](https://github.com/libbpf/libbpf-bootstrap/blob/master/tools/gen_vmlinux_h.sh)
 script to see how it can be done.
 
 Beyond self-explanatory `LICENSE` and `README.md` the rest of `libbpf-bootstrap`
-is contained in a `src/` sub-directory.
+is contained in a `examples/c` sub-directory.
 
-[Makefile](https://github.com/libbpf/libbpf-bootstrap/blob/master/src/Makefile)
+[Makefile](https://github.com/libbpf/libbpf-bootstrap/blob/master/examples/c/Makefile)
 defines the necessary build rules to compile all the supplied (and your
 custom ones) BPF apps. It follows a simple file naming convention:
   - `<app>.bpf.c` files are the BPF C code that contain the logic which is to
@@ -204,7 +228,7 @@ applications and tools, but is good enough for local experimentation.
 ## The BPF side
 
 Here's the BPF-side code 
-([minimal.bpf.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/src/minimal.bpf.c))
+([minimal.bpf.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/examples/c/minimal.bpf.c))
 *in its entirety*:
 
 ```c
@@ -320,7 +344,7 @@ body of `handle_tp()` BPF program and extend it according to your needs.
 ## The user-space side
 
 Let's now look at how things are tied together from user-space
-([minimal.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/src/minimal.c)),
+([minimal.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/examples/c/minimal.c)),
 skipping some pretty obvious parts (please check the full sources anyways).
 
 ```c
@@ -513,7 +537,7 @@ makes all this pretty straightforward.
 # Makefile
 
 Now that we looked at the `minimal` app, we have enough context to look at
-what [Makefile](https://github.com/libbpf/libbpf-bootstrap/blob/master/src/Makefile)
+what [Makefile](https://github.com/libbpf/libbpf-bootstrap/blob/master/examples/c/Makefile)
 does to compile everything into a final executable. I'll skip some necessary
 boilerplate parts and instead concentrate only on the essentials.
 
@@ -659,7 +683,7 @@ use `sudo ./bootstrap -d 100` to show only processes that existed for at least
 ## Includes: vmlinux.h, libbpf and app headers
 
 Here's the include section on the BPF side of things
-([bootstrap.bpf.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/src/bootstrap.bpf.c)):
+([bootstrap.bpf.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/examples/c/bootstrap.bpf.c)):
 
 ```
 #include "vmlinux.h"
@@ -671,8 +695,9 @@ Here's the include section on the BPF side of things
 
 This differs from `minimal.bpf.c` in that we now use `vmlinux.h` header file,
 which includes all the types from the Linux kernel in one file. It comes
-[pre-generated](https://raw.githubusercontent.com/libbpf/libbpf-bootstrap/master/src/vmlinux_508.h)
-with libbpf-bootstrap, but one can also generate the custom one with `bpftool`
+[pre-generated](https://github.com/libbpf/vmlinux.h/blob/main/include/x86/vmlinux_6.6.h)
+from [libbpf/vmlinux.h](https://github.com/libbpf/vmlinux.h) repo, used as
+submodule within libbpf-bootstrap, but one can also generate the custom one with `bpftool`
 (see [gen_vmlinux_h.sh](https://github.com/libbpf/libbpf-bootstrap/blob/master/tools/gen_vmlinux_h.sh)).
 
 > All the types in `vmlinux.h` come with extra
@@ -781,7 +806,7 @@ like dealing with various compatibility checks and extra configuration.
 > is free to just assume 0 and **remove the variable completely**, which is
 > not at all what we want.
 
-From the user-space part (in [bootstrap.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/src/bootstrap.c)),
+From the user-space part (in [bootstrap.c](https://github.com/libbpf/libbpf-bootstrap/blob/master/examples/c/bootstrap.c)),
 there is a slight difference in initializing such read-only global variables.
 They need to be set *before BPF skeleton is loaded* into the kernel. So,
 instead of using a single-step `bootstrap_bpf__open_and_load()`, we need to
@@ -822,7 +847,7 @@ data back to user-space. It's using the `bpf_ringbuf_reserve()`/`bpf_ringbuf_sub
 and performance. Please check the BPF ring buffer [post](/posts/bpf-ringbuf/)
 for more thorough coverage. That post goes through a very similar
 functionality in detail, looking at examples in a separate
-[bpf-ringbuf-examples](https://github.com/libbpf/bpf-ringbuf-examples/)
+[bpf-ringbuf-examples](https://github.com/anakryiko/bpf-ringbuf-examples/)
 repo. It should also give you a pretty good idea how to use BPF perf buffer,
 if you choose to do so.
 
