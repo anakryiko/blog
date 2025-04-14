@@ -537,7 +537,7 @@ extern int LINUX_KERNEL_VERSION __kconfig;
 
 struct thread_struct *thr = ...;
 u64 fsbase;
-if (LINUX_KERNEL_VERSION > KERNEL_VERSION(4, 6, 0))
+if (LINUX_KERNEL_VERSION < KERNEL_VERSION(4, 7, 0))
     fsbase = BPF_CORE_READ((struct thread_struct___v46 *)thr, fs);
 else
     fsbase = BPF_CORE_READ(thr, fsbase);
