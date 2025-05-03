@@ -105,7 +105,7 @@ includes also:
   - [libbpf-sys](https://github.com/libbpf/libbpf-sys) Rust low-level bindings.
 
 **Thanks a lot for your continuing help and contributions, without which
-libbpf wouldn't be were it is today!**
+libbpf wouldn't be where it is today!**
 
 To make this not just a celebratory post, in the rest of it I'll try to
 describe major breaking changes users should be aware of and summarize
